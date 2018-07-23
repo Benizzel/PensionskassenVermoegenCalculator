@@ -92,6 +92,7 @@ public class IcoDialogController {
 	public void initialize(Ico ico) {
 		setIco(ico);
 		setIcoCriteria(ico);
+		setRatingColor();		
 	}
 	
 	/**
@@ -102,6 +103,23 @@ public class IcoDialogController {
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
 	} 
+	
+	private void setRatingColor() {
+		float r = ico.getRating();
+		rating.setText("Rating: " + String.valueOf(ico.getRating())); 
+		if (r >= 4) {
+			rating.setFill(Color.GREEN);
+		}
+		else if (r < 4 && r >= 2) {
+			rating.setFill(Color.ORANGE);
+		}
+		else if (r < 2 && r > 0) {
+			rating.setFill(Color.RED);
+		} 
+		else {
+			rating.setFill(Color.BLACK);
+		}
+	}
 	
 	private void setIco (Ico ico) {
 		this.ico = ico;
@@ -114,21 +132,8 @@ public class IcoDialogController {
 		ico.ratingProperty().addListener(new ChangeListener<Object>() { 
             @Override 
             public void changed(ObservableValue<?> o, Object oldVal, Object newVal) { 
-                		float r = ico.getRating();
-            			rating.setText("Rating: " + String.valueOf(ico.getRating())); 
-                		if (r >= 4) {
-                			rating.setFill(Color.GREEN);
-                		}
-                		else if (r < 4 && r >= 2) {
-                			rating.setFill(Color.ORANGE);
-                		}
-                		else if (r < 2 && r > 0) {
-                			rating.setFill(Color.RED);
-                		} 
-                		else {
-                			rating.setFill(Color.BLACK);
-                		}
-            	}
+            	setRatingColor();
+            }
 		});
 	}
 

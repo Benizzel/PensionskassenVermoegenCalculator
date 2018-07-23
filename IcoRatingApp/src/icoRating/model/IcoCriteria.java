@@ -41,7 +41,7 @@ public class IcoCriteria {
 	@XmlIDREF
 	private Ico ico;
 	
-		
+	@XmlElement	
 	private Rating rating;
 	private boolean isActive;
 	

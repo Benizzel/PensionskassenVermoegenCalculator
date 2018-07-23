@@ -1,5 +1,6 @@
 package icoRating;
 
+import java.beans.EventHandler;
 import java.io.File;
 import java.io.IOException;
 import java.util.prefs.Preferences;
@@ -29,6 +30,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  * Start the ico rating app
@@ -51,7 +53,7 @@ public class MainApp extends Application {
     //private ObservableList<Ico> icoData = FXCollections.observableArrayList();
     private ObservableList<Criteria> criteriaList = FXCollections.observableArrayList();
     private ObservableList<Ico> icoList = FXCollections.observableArrayList();
-    private ObservableList<IcoCriteria> icoCriterionList = FXCollections.observableArrayList();
+ //   private ObservableList<IcoCriteria> icoCriterionList = FXCollections.observableArrayList();
     private Ico ico;
     
     /**
@@ -84,7 +86,7 @@ public class MainApp extends Application {
         initRootLayout();
         showIcoOverview();
     }
-
+    
     /**
      * Initializes the root layout and tries to load the last opened
      * person file.
@@ -100,10 +102,12 @@ public class MainApp extends Application {
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
+            
 
             // Give the controller access to the main app.
             RootLayoutController controller = loader.getController();
             controller.setMainApp(this);
+            controller.setPrimaryStage(primaryStage);
 
             primaryStage.show();
         } catch (IOException e) {
@@ -348,5 +352,5 @@ public class MainApp extends Application {
 		
 		            alert.showAndWait();
 		        }
-		    }
+		    }		    
 }

@@ -49,7 +49,7 @@
       <ButtonBar layoutX="980.0" layoutY="537.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="20.0">
         <buttons>
           <Button mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
-            <Button mnemonicParsing="false" onAction="#handleOk" text="OK" />
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOk" text="OK" />
         </buttons>
       </ButtonBar>
       <TableView fx:id="icoCriteriaTable" layoutX="20.0" layoutY="477.0" prefHeight="414.0" prefWidth="1160.0">

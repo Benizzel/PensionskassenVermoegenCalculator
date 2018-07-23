@@ -15,7 +15,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="icoRating.view.CriteriaDialogController">
    <children>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New Criteria" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Criteria" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
          <font>
             <Font size="52.0" />
          </font>
@@ -45,7 +45,7 @@
       <ButtonBar layoutX="969.0" layoutY="529.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="20.0">
         <buttons>
           <Button mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
-            <Button mnemonicParsing="false" onAction="#handleOk" text="OK" />
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOk" text="OK" />
         </buttons>
       </ButtonBar>
    </children>

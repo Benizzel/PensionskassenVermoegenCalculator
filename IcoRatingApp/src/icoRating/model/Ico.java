@@ -55,8 +55,8 @@ public class Ico {
 	
 	//@XmlIDREF
 	@XmlElement(name="icoCriteriaReference")
+
 	private ArrayList<IcoCriteria> allIcoCriteria;
-//	private ObservableList<IcoCriteria> allIcoCriteria = FXCollections.observableArrayList();
 	
 	
 	/**
@@ -169,8 +169,8 @@ public class Ico {
 		return oAllIcoCriteria;
 	}
 	
-	public void setIcoCriterion(List<IcoCriteria> criteriaList) {
-		allIcoCriteria = (ArrayList<IcoCriteria>) criteriaList;
+	public void setIcoCriterion(ArrayList<IcoCriteria> criteriaList) {
+		allIcoCriteria = criteriaList;
 //		allIcoCriteria = (ObservableList<IcoCriteria>) criteriaList;
 	}
 	
@@ -230,7 +230,7 @@ public class Ico {
 		float rRound = 0;
 
 		for (IcoCriteria c : getActiveIcoCriteria()) {
-			if (c.getRating() != 0) {
+			if (c.getRating() != 0 && c.getRating() != 0) {
 				int weightedRating = (c.getRating() * c.getCriteria().getWeightAsInt());
 				int weight = c.getCriteria().getWeightAsInt();
 				weightedRatings.add(weightedRating);

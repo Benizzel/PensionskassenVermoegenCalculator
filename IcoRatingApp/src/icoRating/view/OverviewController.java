@@ -135,8 +135,30 @@ public class OverviewController {
 		this.mainApp = mainApp;
 		
 		//add observable list data to the table
+		mainApp.getIcoList().forEach(ico -> ico.calculateRating());
 		icoTable.setItems(mainApp.getIcoList());
+		
+		icoTable.setRowFactory( tv -> {
+		    TableRow<Ico> row = new TableRow<>();
+		    row.setOnMouseClicked(event -> {
+		        if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+		            handleEditIco();
+		        }
+		    });
+		    return row ;
+		});
+		
 		criteriaTable.setItems(mainApp.getCriteriaList());
+		
+		criteriaTable.setRowFactory( tv -> {
+		    TableRow<Criteria> row = new TableRow<>();
+		    row.setOnMouseClicked(event -> {
+		        if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+		            handleEditCriteria();
+		        }
+		    });
+		    return row ;
+		});
 	}
 	
 	/**
