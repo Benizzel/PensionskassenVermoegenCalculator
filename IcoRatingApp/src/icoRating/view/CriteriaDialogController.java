@@ -85,13 +85,16 @@ public class CriteriaDialogController {
 		
 		//Creates for each Ico an IcoCriteria and adds it to the Ico
 		mainApp.getIcoList().forEach(Ico -> {
-			for (IcoCriteria c : Ico.getAllIcoCriteria()) {
-				if (c.getCriteria().getUuid().equals(criteria.getUuid())) {
-				//do nothing
-			} 	else {
-					Ico.addCriteria(new IcoCriteria(criteria, Ico));
-			}
-			}});
+			 boolean hasIt = false;
+	           for (final IcoCriteria c : Ico.getAllIcoCriteria()) {
+	               if (c.getCriteria().getUuid().equals(criteria.getUuid())) {
+	                   hasIt = true;
+	               }
+	           }
+	           if (!hasIt) {
+	               Ico.addCriteria(new IcoCriteria(criteria, Ico));
+	           }
+		});
 	}
 	
 	/**
