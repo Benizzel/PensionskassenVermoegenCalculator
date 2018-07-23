@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="icoRating.view.CriteriaDialogController">
+   <children>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New Criteria" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <font>
+            <Font size="52.0" />
+         </font>
+      </Text>
+      <GridPane prefHeight="312.0" prefWidth="1160.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="120.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="574.0" minWidth="10.0" prefWidth="123.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1045.0" minWidth="10.0" prefWidth="1037.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="59.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="129.0" minHeight="10.0" prefHeight="115.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="61.0" minHeight="8.0" prefHeight="61.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="61.0" minHeight="8.0" prefHeight="61.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Name" />
+            <Label text="Description" GridPane.rowIndex="1" />
+            <Label text="Category" GridPane.rowIndex="2" />
+            <TextField fx:id="nameField" promptText="Whitepaper" GridPane.columnIndex="1" />
+            <TextArea fx:id="descriptionField" prefHeight="200.0" prefWidth="200.0" promptText="Lorem ipsum" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="categoryField" promptText="Marketing" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ComboBox fx:id="cbWeight" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label text="Weight" GridPane.rowIndex="3" />
+         </children>
+      </GridPane>
+      <ButtonBar layoutX="969.0" layoutY="529.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="20.0">
+        <buttons>
+          <Button mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
+            <Button mnemonicParsing="false" onAction="#handleOk" text="OK" />
+        </buttons>
+      </ButtonBar>
+   </children>
+</AnchorPane>
