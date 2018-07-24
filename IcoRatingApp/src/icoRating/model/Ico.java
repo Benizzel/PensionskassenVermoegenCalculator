@@ -230,7 +230,7 @@ public class Ico {
 		float rRound = 0;
 
 		for (IcoCriteria c : getActiveIcoCriteria()) {
-			if (c.getRating() != 0 && c.getRating() != 0) {
+			if (c.getRating() != 0) {
 				int weightedRating = (c.getRating() * c.getCriteria().getWeightAsInt());
 				int weight = c.getCriteria().getWeightAsInt();
 				weightedRatings.add(weightedRating);

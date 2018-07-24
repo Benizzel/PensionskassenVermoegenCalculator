@@ -3,6 +3,7 @@ package icoRating;
 import java.beans.EventHandler;
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.prefs.Preferences;
 
 import javax.xml.bind.JAXBContext;
@@ -23,7 +24,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -306,11 +309,15 @@ public class MainApp extends Application {
 		            setFilePath(file);
 		
 		        } catch (Exception e) { // catches ANY exception
-		            Alert alert = new Alert(AlertType.ERROR);
-		            alert.setTitle("Error");
+		            Alert alert = new Alert(AlertType.WARNING);
+		            alert.setTitle("Warning");
 		            alert.setHeaderText("Could not load data");
-		            alert.setContentText("Could not load data from file:\n" + file.getPath() + e);
-		
+		            alert.setContentText(
+		            		"Could not load data from file:\n" +
+		            		file.getPath() + "\n\n" +
+		            		"A new Portfolio will be created.\n\n" +
+		            		"If you want to open an existing Portfolio use Menu 'File' -> 'Open'\n"
+		            ); 
 		            alert.showAndWait();
 		        }
 		    }
