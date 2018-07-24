@@ -47,6 +47,8 @@ public class CriteriaDialogController {
 	
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
+		dialogStage.setMaxHeight(440);
+		dialogStage.setMaxWidth(1200);
 	}
 	
 	private void setCriteria (Criteria criteria) {

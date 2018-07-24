@@ -45,7 +45,7 @@ public class RootLayoutController {
      * Creates an empty address book.
      */
     @FXML
-    public void handleNew() {
+    private void handleNew() {
     	Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("IcoRatingApp");
         alert.setHeaderText("New Portfolio");
@@ -74,7 +74,7 @@ public class RootLayoutController {
      * Opens a FileChooser to let the user select an address book to load.
      */
     @FXML
-    public void handleOpen() {
+    private void handleOpen() {
     	handleSave();
         FileChooser fileChooser = new FileChooser();
 
@@ -96,7 +96,7 @@ public class RootLayoutController {
      * open file, the "save as" dialog is shown.
      */
     @FXML
-    public void handleSave() {
+    private void handleSave() {
         File personFile = mainApp.getFilePath();
         if (personFile != null) {
             mainApp.saveCriteriaDataToFile(personFile);
@@ -109,7 +109,7 @@ public class RootLayoutController {
      * Opens a FileChooser to let the user select a file to save to.
      */
     @FXML
-    public void handleSaveAs() {
+    private void handleSaveAs() {
         FileChooser fileChooser = new FileChooser();
 
         // Set extension filter
@@ -133,7 +133,7 @@ public class RootLayoutController {
      * Opens an about dialog.
      */
     @FXML
-    public void handleAbout() {
+    private void handleAbout() {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("IcoRatingApp");
         alert.setHeaderText("About");
@@ -146,7 +146,7 @@ public class RootLayoutController {
      * Closes the application.
      */
     @FXML
-    public void handleExit() {
+    private void handleExit() {
     	Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("IcoRatingApp");
         alert.setHeaderText("Exit");

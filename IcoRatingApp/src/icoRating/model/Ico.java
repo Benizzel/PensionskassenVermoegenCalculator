@@ -48,6 +48,7 @@ public class Ico {
 	private UUID uuid;
 	
 	private StringProperty name;
+	private final StringProperty description;
 	private FloatProperty rating;
 	private ObjectProperty<LocalDate> startDate;
 	private ObjectProperty<LocalDate> endDate;
@@ -67,7 +68,7 @@ public class Ico {
 	//scheinbar muss im constructor, wenn objekt ohne instanzvariablen instanziert wird, für alle string attribut ein "null" mitgegeben werden.. also hier this(null) - mal
 	//nachforschen, wieso das so ist...
 	public Ico() {
-		this(null);
+		this(null, null);
 		allIcoCriteria = new ArrayList<IcoCriteria>();
 		
 		//id=Integer.toString(count++);
@@ -78,9 +79,9 @@ public class Ico {
 	 * Die Auskommentierten Codezeilen würden "richtige" Daten erzeugen. Die anderen instanzieren mit 0
 	 */
 	
-	public Ico(String name) {
+	public Ico(String name, String description) {
 		this.name = new SimpleStringProperty(name);
-		
+		this.description = new SimpleStringProperty(description);
 		//Some initial dummy data, just for convenient testing - diese dummy daten werden jedem ICO, den ich mit di
 		this.rating = new SimpleFloatProperty();
 		//this.startDate = new SimpleObjectProperty<LocalDate>(LocalDate.of(2018, 05, 12));
@@ -106,6 +107,18 @@ public class Ico {
 	//wird für das GUI benötigt - Ich nenne die Variable nameProperty, inhalt ist variable name
 	public StringProperty nameProperty() {
 		return name;
+	}
+	
+	public String getDescription() {
+		return description.get();
+	}
+	
+	public void setDescription (String description) {
+		this.description.set(description);
+	}
+	
+	public StringProperty descriptionProperty() {
+		return description;
 	}
 	
 	//wert aus variable rating wird als Integer Object zurückgegeben	

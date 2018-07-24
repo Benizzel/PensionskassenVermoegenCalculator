@@ -22,6 +22,7 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.ComboBoxTableCell;
@@ -46,6 +47,9 @@ public class IcoDialogController {
 	
 	@FXML
 	private TextField nameField;
+	
+	@FXML
+	private TextArea descriptionField;
 	
 	@FXML
 	private DatePicker startDateField;
@@ -125,6 +129,7 @@ public class IcoDialogController {
 		this.ico = ico;
 				
 		nameField.setText(ico.getName());
+		descriptionField.setText(ico.getDescription());
 		startDateField.setValue(ico.getStartDate());
 		endDateField.setValue(ico.getEndDate());
 		investmentField.setText(Float.toString(ico.getInvestment()));
@@ -252,6 +257,7 @@ public class IcoDialogController {
 	private void handleOk() {
 		if (isInputValid()) {
 			ico.setName(nameField.getText());
+			ico.setDescription(descriptionField.getText());
 			ico.setStartDate(startDateField.getValue());
 			ico.setEndDate(endDateField.getValue());
 			ico.setInvestment(Float.parseFloat(investmentField.getText()));

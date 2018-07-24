@@ -134,6 +134,7 @@ public class OverviewController {
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 		
+		
 		//add observable list data to the table
 		mainApp.getIcoList().forEach(ico -> ico.calculateRating());
 		icoTable.setItems(mainApp.getIcoList());
