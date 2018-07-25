@@ -2,8 +2,10 @@ package icoRating.util;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
-import javax.xml.bind.annotation.XmlID;
 
+/**
+ * @author Benjamin Wyss
+ */
 @XmlEnum
 public enum Rating {
 	
@@ -20,40 +22,51 @@ public enum Rating {
 	@XmlEnumValue("1")
 	VERYBAD(1, "Very Bad");
 
-		
-		private Integer code;
-		private String text;
-	 
-	   private Rating(Integer code, String text) {
-	       this.code = code;
-	       this.text = text;
-	   }
-	   
-	   public Integer getCode() {
-	       return code;
-	   }
-	 
-	   public String getText() {
-	       return text;
-	   }
-	 
-	  
-	   public static Rating getByCode(Integer ratingCode) {
-	       for (Rating r : Rating.values()) {
-	           if (r.code.equals(ratingCode)) {
-	               return r;
-	           }
-	       }
-	       return null;
-	   }
-	 
-	   @Override
-	   public String toString() {
-	       return this.text;
-	   }
+	private Integer code;
+	private String text;
 
-	public static Rating parse(String v) {
-		// TODO Auto-generated method stub
+	/**
+	 * Constructor
+	 * @param code
+	 * @param text
+	 */
+	private Rating(Integer code, String text) {
+		this.code = code;
+		this.text = text;
+	}
+
+	/**
+	 * @return Rating Code as Integer
+	 */
+	public Integer getCode() {
+		return code;
+	}
+
+	/**
+	 * @return Rating text as String
+	 */
+	public String getText() {
+		return text;
+	}
+
+	/**
+	 * @param ratingCode
+	 * @return enum Rating or null
+	 */
+	public static Rating getByCode(Integer ratingCode) {
+		for (Rating r : Rating.values()) {
+			if (r.code.equals(ratingCode)) {
+				return r;
+			}
+		}
 		return null;
+	}
+	
+	/**
+	 * @return text of Rating
+	 */
+	@Override
+	public String toString() {
+		return this.text;
 	}
 }

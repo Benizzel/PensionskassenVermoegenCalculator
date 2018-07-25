@@ -2,6 +2,10 @@ package icoRating.util;
 
 import java.math.BigDecimal;
 
+/**
+ * Helper Functions to round a float
+ * @author Benjamin Wyss
+ */
 public class RoundUtil {
 	
 	public static float round(float d, int decimalPlace) {
