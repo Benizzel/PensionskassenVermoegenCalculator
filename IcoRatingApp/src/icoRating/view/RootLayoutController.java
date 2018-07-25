@@ -90,7 +90,7 @@ public class RootLayoutController {
         } else if (result.get() == buttonTypeCancel) {
         	alert.close();
         } else {
-        	FileChooser fileChooser = new FileChooser();
+        	final FileChooser fileChooser = new FileChooser();
 
             // Set extension filter
             FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
@@ -98,7 +98,7 @@ public class RootLayoutController {
             fileChooser.getExtensionFilters().add(extFilter);
 
             // Show open file dialog
-            File file = fileChooser.showOpenDialog(mainApp.getPrimaryStage());
+            final File file = fileChooser.showOpenDialog(mainApp.getPrimaryStage());
 
             if (file != null) {
                 mainApp.loadCriteriaDataFromFile(file);
@@ -114,7 +114,7 @@ public class RootLayoutController {
     private void handleSave() {
     	if (isPortfolioValid()) {
     	
-    		File personFile = mainApp.getFilePath();
+    		final File personFile = mainApp.getFilePath();
     		if (personFile != null) {
     			mainApp.saveCriteriaDataToFile(personFile);
     		} else {
@@ -130,7 +130,7 @@ public class RootLayoutController {
     private void handleSaveAs() {
     	if (isPortfolioValid()) {
     	
-    		FileChooser fileChooser = new FileChooser();
+    		final FileChooser fileChooser = new FileChooser();
 
     		// Set extension filter
     		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(

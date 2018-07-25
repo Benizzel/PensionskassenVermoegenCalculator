@@ -36,8 +36,8 @@ public class MainApp extends Application {
 	
 	private Stage primaryStage;
     private BorderPane rootLayout;
-    private ObservableList<Criteria> criteriaList = FXCollections.observableArrayList();
-    private ObservableList<Ico> icoList = FXCollections.observableArrayList();
+    private final ObservableList<Criteria> criteriaList = FXCollections.observableArrayList();
+    private final ObservableList<Ico> icoList = FXCollections.observableArrayList();
     
     /**
      * launches the app
