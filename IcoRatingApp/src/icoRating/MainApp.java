@@ -145,7 +145,8 @@ public class MainApp extends Application {
     		//Give the controller access to the main app.
     		OverviewController controller = loader.getController();
     		controller.setMainApp(this);
-    		
+    		controller.setIcoData();
+    		controller.setCriteriaData();
     	} catch (IOException e) {
     		e.printStackTrace();
     	}

@@ -1,99 +1,54 @@
 package icoRating.view;
 
-import java.beans.EventHandler;
 import java.time.LocalDate;
 
 import icoRating.MainApp;
 import icoRating.model.Criteria;
 import icoRating.model.Ico;
 import icoRating.model.IcoCriteria;
-import icoRating.util.Rating;
-import icoRating.util.Weight;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableRow;
-import javafx.util.Callback;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 
 /**
  * Controller Class for the IcoOverview GUI.
- * @FXML ist anotation, damit fxml file zugriff auf die privaten felder und privaten methoden hat
- * @author beniw
- *
+ * The GUI provides an overview of all ICO and Criteria 
+ * On the overview functionalities to add, edit and delete ICOs or Criterias are provided
+ * @author Benjamin Wyss
  */
-
-/**
- * Variablen der Controller Klasse. die Variable "icoTable" ist vom Typ "TybleView aus der javafx.scene.control.TableView Klasse
- * https://docs.oracle.com/javafx/2/api/javafx/scene/control/TableView.html
- * @author beniw
- *
- */
-
 public class OverviewController {
-	
-	/**
-	 * Tab My ICO
-	 */
+
 	@FXML
 	private TableView<Ico> icoTable;
-	
 	@FXML
 	private TableColumn<Ico, String> icoTableNameColumn;
-	
 	@FXML
 	private TableColumn<Ico, LocalDate> icoTableStartDateColumn;
-	
 	@FXML
 	private TableColumn<Ico, LocalDate> icoTableEndDateColumn;
-	
 	@FXML
 	private TableColumn<Ico, Float> icoTableInvestmentColumn;
-	
 	@FXML
 	private TableColumn<Ico, Float> icoTableRatingColumn;
 
-	
-	/**
-	 * Tab Rating Criteria
-	 */
 	@FXML
 	private TableView<Criteria> criteriaTable;
-	
 	@FXML
 	private TableColumn<Criteria, String> criteriaTableNameColumn;
-	
 	@FXML
 	private TableColumn<Criteria, String> criteriaTableDescriptionColumn;
-	
 	@FXML
 	private TableColumn <Criteria, String> criteriaTableCategoryColumn;
-	
 	@FXML
 	private TableColumn <Criteria, String> criteriaTableWeightColumn;
 	
-	
-	/**
-	 * Wenn ich labels benutzen möchte:
-	 * @fxml
-	 * privat Label firstNameLabel;
-	 */
-	
-	//Reference to the main application
 	private MainApp mainApp;
 	
 	/**
-	 * The constructor
+	 * Constructor
 	 * The constructor is called before the initialize() method.
 	 */
 	public OverviewController() {
@@ -105,40 +60,56 @@ public class OverviewController {
 	 */
 	@FXML
 	private void initialize() {
-		//Initialize the ico table with the columns
-		//name column holt sich von der ico klasse den wert für name mit der name property methode
-		//TODO: Nochmals genau nachvollziehen. Ist das Lambda?
 		icoTableNameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
 		icoTableStartDateColumn.setCellValueFactory(cellData -> cellData.getValue().startDateProperty());
 		icoTableEndDateColumn.setCellValueFactory(cellData -> cellData.getValue().endDateProperty());
-		//TODO: Wenn wert integer/float ist, muss ich noch "asObject" einfügen. - Wieso? mal im tutorial gucken
 		icoTableInvestmentColumn.setCellValueFactory(cellData -> cellData.getValue().investmentProperty().asObject());
 		icoTableRatingColumn.setCellValueFactory(cellData -> cellData.getValue().ratingProperty().asObject());
-		//Programm weiss, dass die Properties von Criteria Klasse geholt werden weil in den Attributen ist das definiert (TableColumn<Criteria>)
+		
 		criteriaTableNameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
 		criteriaTableDescriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
 		criteriaTableCategoryColumn.setCellValueFactory(cellData -> cellData.getValue().categoryProperty());
-		criteriaTableWeightColumn.setCellValueFactory(cellData -> cellData.getValue().getWeightAsStringProperty());
-		
+		criteriaTableWeightColumn.setCellValueFactory(cellData -> cellData.getValue().getWeightAsStringProperty());	
 	}
 
-	
-	/**
-	 * Is called by the main applicatin to give a reference back to itselv
-	 * 
-	 * @param mainApp
-	 * TODO: Was bedeutet @param?
-	 * setMainApp - Methodenname ; MainApp - Variablentyp ("Variable vom Typ Klasse "MainApp") ; mainApp - Variablenname
-	 */
-	
+    /**
+     * Is called by the main application to give a reference back to itself.
+     * @param mainApp
+     */
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
-		
-		
-		//add observable list data to the table
+	}
+	
+	/**
+	 * add observable list data and event handler to the ico table
+	 * calculates rating of ico so that up to date rating is shown
+	 */
+	public void setIcoData() {
+		/*
+		 * add observable list data and event handler to the ico table
+		 * calculates rating of ICO so that up to date rating is shown
+		 */
 		mainApp.getIcoList().forEach(ico -> ico.calculateRating());
 		icoTable.setItems(mainApp.getIcoList());
-		
+		icoTable.setRowFactory( tv -> {
+		    TableRow<Ico> row = new TableRow<>();
+		    row.setOnMouseClicked(event -> {
+		        if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+		            handleEditIco();
+		        }
+		    });
+		    return row ;
+		});
+	}
+	
+	/**
+	 * add observable list data and event handler to the ico table
+	 * calculates rating of ico so that up to date rating is shown
+	 */
+	public void setCriteriaData() {
+
+		mainApp.getIcoList().forEach(ico -> ico.calculateRating());
+		icoTable.setItems(mainApp.getIcoList());
 		icoTable.setRowFactory( tv -> {
 		    TableRow<Ico> row = new TableRow<>();
 		    row.setOnMouseClicked(event -> {
@@ -149,8 +120,8 @@ public class OverviewController {
 		    return row ;
 		});
 		
+		//add observable list data and event handler to the criteria table
 		criteriaTable.setItems(mainApp.getCriteriaList());
-		
 		criteriaTable.setRowFactory( tv -> {
 		    TableRow<Criteria> row = new TableRow<>();
 		    row.setOnMouseClicked(event -> {
@@ -164,8 +135,6 @@ public class OverviewController {
 	
 	/**
 	 * Called when the user clicks on the delete ICO button
-	 * holt sich den Index von der ausgewählten Reihe (ist ein Integer, daher int) und speichert ihn im selectedIndex. Nacher löscht er selected index
-	 * Falls kein Eintrag ausgewählt (selectedIndex ist dann -1) -> Error Handling
 	 */
 	@FXML
 	private void handleDeleteIco() {
@@ -187,14 +156,14 @@ public class OverviewController {
 	
 	/**
 	 * Called when the user clicks on the Edit ICO button
-	 * holt sich den Index von der ausgewählten Reihe (ist ein Integer, daher int) und speichert ihn im selectedIndex. Nacher löscht er selected index
-	 * Falls kein Eintrag ausgewählt (selectedIndex ist dann -1) -> Error Handling
+	 * Opens IcoDialog
 	 */
 	@FXML
 	private void handleEditIco() {
 		Ico selectedIco = icoTable.getSelectionModel().getSelectedItem();
 		if (selectedIco != null) {
 			boolean okClicked = mainApp.showIcoDialog(selectedIco);
+			
 			if (okClicked) {
 			}
 		} else {
@@ -209,23 +178,26 @@ public class OverviewController {
 		}
 	}
 	
-	
 	/**
-	 * Called, when the user clicks the Add New ICO Button. Opens a dialog to add a new ICO
-	 * TODO: Methode noch genau studieren. Wartet bis ok clicked und speichert dann ICO oder so
+	 * Called, when the user clicks the Add New ICO Button.
+	 * Opens IcoDialog
 	 */
 	@FXML
 	private void handleNewIco () {
 		Ico tempIco = new Ico();
 		mainApp.getCriteriaList().forEach(Criteria -> tempIco.addCriteria(new IcoCriteria(Criteria, tempIco)));
-		
-		//Der variablen "okClicked" wird der Wert vom Dialog "NewICO" zugewiesen. Wenn also dort okClicked dann ist auch hier okClicked
 		boolean okClicked = mainApp.showIcoDialog(tempIco);
+		
 		if (okClicked) {
 			mainApp.getIcoList().add(tempIco);
 		}
 	}
 	
+	/**
+	 * Called, when the user clicks the Delete Criteria Button
+	 * Deletes the selected Criteria and the related IcoCriteria
+	 * Forces a recalculation of the ICO Rating
+	 */
 	@FXML
 	private void handleDeleteCriteria() {
 		int selectedIndex = criteriaTable.getSelectionModel().getSelectedIndex();
@@ -246,15 +218,10 @@ public class OverviewController {
 		}
 	}
 	
-	@FXML
-	private void handleNewCriteria() {
-		Criteria tempCriteria = new Criteria();
-		boolean okClicked = mainApp.showCriteriaDialog(tempCriteria);
-		if (okClicked) {
-			mainApp.getCriteriaList().add(tempCriteria);
-		}
-	}
-	
+	/**
+	 * Called when the user clicks on the Edit Criteria button
+	 * Opens CriteriaDialog
+	 */
 	@FXML
 	private void handleEditCriteria() {
 		Criteria selectedCriteria = criteriaTable.getSelectionModel().getSelectedItem();
@@ -274,8 +241,17 @@ public class OverviewController {
 		}
 	}
 	
-
-	
-	
+	/**
+	 * Called when the user clicks on the New button
+	 * Opens CriteriaDialog
+	 */
+	@FXML
+	private void handleNewCriteria() {
+		Criteria tempCriteria = new Criteria();
+		boolean okClicked = mainApp.showCriteriaDialog(tempCriteria);
+		if (okClicked) {
+			mainApp.getCriteriaList().add(tempCriteria);
+		}
+	}
 }
  
