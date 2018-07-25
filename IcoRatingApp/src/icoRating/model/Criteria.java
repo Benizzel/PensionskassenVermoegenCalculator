@@ -161,6 +161,7 @@ public class Criteria {
 	 * @param enum weight to set
 	 */
 	public void setWeight(Weight weight) {
-		this.weight = weight;
+		 this.weight = weight;
+		 
 	}
 }

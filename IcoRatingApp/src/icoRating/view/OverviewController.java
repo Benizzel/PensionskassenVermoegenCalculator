@@ -6,11 +6,23 @@ import icoRating.MainApp;
 import icoRating.model.Criteria;
 import icoRating.model.Ico;
 import icoRating.model.IcoCriteria;
+import icoRating.util.Rating;
+import icoRating.util.Weight;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.cell.ComboBoxTableCell;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.Callback;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 
 /**
@@ -42,8 +54,12 @@ public class OverviewController {
 	private TableColumn<Criteria, String> criteriaTableDescriptionColumn;
 	@FXML
 	private TableColumn <Criteria, String> criteriaTableCategoryColumn;
-	@FXML
-	private TableColumn <Criteria, String> criteriaTableWeightColumn;
+	/*
+	 * Removed Weight Column because of some issues updating it. 
+	 * TODO Fix
+	 * @FXML
+	 * private TableColumn <Criteria, Weight> criteriaTableWeightColumn;
+	 */
 	
 	private MainApp mainApp;
 	
@@ -69,7 +85,11 @@ public class OverviewController {
 		criteriaTableNameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
 		criteriaTableDescriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
 		criteriaTableCategoryColumn.setCellValueFactory(cellData -> cellData.getValue().categoryProperty());
-		criteriaTableWeightColumn.setCellValueFactory(cellData -> cellData.getValue().getWeightAsStringProperty());	
+		/*
+		 * Removed Weight Column because of some issues updating it. 
+		 * TODO Fix
+		 * criteriaTableWeightColumn.setCellValueFactory(cellData -> cellData.getValue().getWeightString());
+		 */
 	}
 
     /**
@@ -94,7 +114,7 @@ public class OverviewController {
 		icoTable.setRowFactory( tv -> {
 		    TableRow<Ico> row = new TableRow<>();
 		    row.setOnMouseClicked(event -> {
-		        if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+		        if (event.getClickCount() == 2 && (!row.isEmpty()) ) {
 		            handleEditIco();
 		        }
 		    });
@@ -113,7 +133,7 @@ public class OverviewController {
 		icoTable.setRowFactory( tv -> {
 		    TableRow<Ico> row = new TableRow<>();
 		    row.setOnMouseClicked(event -> {
-		        if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+		        if (event.getClickCount() == 2 && (!row.isEmpty()) ) {
 		            handleEditIco();
 		        }
 		    });
@@ -227,7 +247,7 @@ public class OverviewController {
 		Criteria selectedCriteria = criteriaTable.getSelectionModel().getSelectedItem();
 		if (selectedCriteria != null) {
 			boolean okClicked = mainApp.showCriteriaDialog(selectedCriteria);
-			if (okClicked) {
+			if (okClicked) {	
 			}
 		} else {
 			//Nothing selected

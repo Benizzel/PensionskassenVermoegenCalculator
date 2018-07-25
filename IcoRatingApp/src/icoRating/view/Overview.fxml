@@ -71,7 +71,7 @@
                             <TableColumn fx:id="criteriaTableNameColumn" minWidth="-1.0" prefWidth="150.0" text="Name" />
                             <TableColumn fx:id="criteriaTableDescriptionColumn" minWidth="-1.0" prefWidth="400.0" text="Description" />
                               <TableColumn fx:id="criteriaTableCategoryColumn" minWidth="-1.0" prefWidth="150.0" text="Category" />
-                              <TableColumn fx:id="criteriaTableWeightColumn" minWidth="-1.0" prefWidth="100.0" text="Weight" />
+                              <TableColumn fx:id="criteriaTableWeightColumn" minWidth="-1.0" prefWidth="100.0" text="Weight" visible="false" />
                           </columns>
                            <contextMenu>
                               <ContextMenu>
