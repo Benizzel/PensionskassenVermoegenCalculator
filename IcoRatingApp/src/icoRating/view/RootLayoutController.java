@@ -101,7 +101,7 @@ public class RootLayoutController {
             final File file = fileChooser.showOpenDialog(mainApp.getPrimaryStage());
 
             if (file != null) {
-                mainApp.loadCriteriaDataFromFile(file);
+                mainApp.loadPortfolioDataFromFile(file);
             }
         }
     }
@@ -116,7 +116,7 @@ public class RootLayoutController {
     	
     		final File personFile = mainApp.getFilePath();
     		if (personFile != null) {
-    			mainApp.saveCriteriaDataToFile(personFile);
+    			mainApp.savePortfolioDataToFile(personFile);
     		} else {
     			handleSaveAs();
     		}
@@ -145,7 +145,7 @@ public class RootLayoutController {
     			if (!file.getPath().endsWith(".xml")) {
     				file = new File(file.getPath() + ".xml");
     			}
-            mainApp.saveCriteriaDataToFile(file);
+            mainApp.savePortfolioDataToFile(file);
     		}
     	}
     }

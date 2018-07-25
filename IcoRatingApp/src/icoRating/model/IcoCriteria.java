@@ -1,6 +1,5 @@
 package icoRating.model;
 
-import java.util.Observable;
 import java.util.UUID;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -9,31 +8,26 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import icoRating.util.LocalDateAdapter;
 import icoRating.util.Rating;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.StringProperty;
-import javafx.util.Callback;
 
 /**
- * Model class for a criteria added to an Ico
- * 
- * @author beniw
- *
+ * Model class for an IcoCriteria
+ * Each Criteria becomes an IcoCriteria for each ICO
+ * If an ICO is added, all Criteria must be added to the ICO as an IcoCriteria
+ * @author Benjamin Wyss
  */
-
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class IcoCriteria {
-	
-//	private static int count = 0;
-	
+
+	/**
+	 * UUID must be stored as String because JAXB accepts only String as a XmlID
+	 * Do not delete variable and add XmlID to the method "getUuidAsString".
+	 * Elsewhere existing Portfolios cannot be loaded
+	 */
 	@XmlAttribute
 	@XmlID
 	private String uuidString;
 	private UUID uuid;
-	
 	
 	@XmlIDREF
 	private Criteria criteria;
@@ -52,11 +46,11 @@ public class IcoCriteria {
 		this(null, null);
 	}
 
-
-	/*
-	 * Constructor to initialise a new Criteria on all ICO
+	/**
+	 * Constructor to 
+	 * @param criteria
+	 * @param ico
 	 */
-	
 	public IcoCriteria(Criteria criteria, Ico ico) {
 		this.criteria = criteria;
 		this.ico = ico;
@@ -66,57 +60,61 @@ public class IcoCriteria {
 		uuidString = uuid.toString();
 	}
 	
-	/*
-	 * Constructor to add a Criteria to an ICO
+	/**
+	 * @return the UUID as String
 	 */
-	
-	public IcoCriteria(Criteria criteria, Ico ico, Rating rating, boolean isActive) {
-		this.criteria = criteria;
-		this.ico = ico;
-		this.rating = rating;
-		this.isActive = isActive;
-		uuid = UUID.randomUUID();
-		uuidString = uuid.toString();
+	public String getUuidAsString() {
+		return uuidString;
 	}
 	
-//	@XmlIDREF
-//	@XmlElement
+	/**
+	 * @return the UUID
+	 */
+	public UUID getUuid() {
+		return uuid;
+	}
+	
+	/**
+	 * @return the underlined Criteria
+	 */
 	public Criteria getCriteria() {
 		return criteria;
 	}
 	
-	//@XmlIDREF
+	/**
+	 * @return the ICO the IcoCriteria refers to
+	 */
 	public Ico getIco() {
 		return ico;
 	}
 
+	/**
+	 * activated IcoCriteria are used to calculate the ICOs overall rating
+	 * @return if the IcoCriteria is activate
+	 */
 	public boolean isActive() {
 		return isActive;
 	}
 
+	/**
+	 * @param isActive
+	 */
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}
 	
-	
+	/**
+	 * @return the specific rating of this IcoCriteria as int
+	 */
 	public Integer getRating() {
 		Integer ratingInt = rating.getCode();
 		return ratingInt;
 	}
 
+	/**
+	 * @param rating as enum Rating
+	 */
 	public void setRating (Rating rating) {
 		this.rating = rating;
 	}
-	
-//	@XmlAttribute
-//	XmlID
-	public String getUuidAsString() {
-		return uuidString;
-	}
-	
-	public UUID getUuid() {
-		return uuid;
-	}
-
-
 }

@@ -114,7 +114,7 @@ public class MainApp extends Application {
         // Try to load last opened person file.
         File file = getFilePath();
         if (file.exists()) {
-            loadCriteriaDataFromFile(file);
+            loadPortfolioDataFromFile(file);
         } else {
         	Alert alert = new Alert(AlertType.INFORMATION);
     		alert.setTitle("Portfolio");
@@ -275,11 +275,11 @@ public class MainApp extends Application {
     }
     
 	/**
-	 * Loads criteria data from the specified file. The current criteria data will
+	 * Loads Portfolio data from the specified file. The current data will
 	 * be replaced.
 	 * @param file
 	 */
-	public void loadCriteriaDataFromFile(File file) {
+	public void loadPortfolioDataFromFile(File file) {
 		try {
 			JAXBContext context = JAXBContext.newInstance(PortfolioWrapper.class);
 			Unmarshaller um = context.createUnmarshaller();
@@ -306,10 +306,10 @@ public class MainApp extends Application {
 	}
 
 	/**
-	 * Saves the current person data to the specified file. 
+	 * Saves the current Portfolio data to the specified file. 
 	 * @param file
 	 */
-	public void saveCriteriaDataToFile(File file) {
+	public void savePortfolioDataToFile(File file) {
 		try {
 			JAXBContext context = JAXBContext.newInstance(PortfolioWrapper.class);
 			Marshaller m = context.createMarshaller();
