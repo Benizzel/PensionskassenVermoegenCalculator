@@ -97,12 +97,15 @@ public class RootLayoutController {
      */
     @FXML
     private void handleSave() {
-        File personFile = mainApp.getFilePath();
-        if (personFile != null) {
-            mainApp.saveCriteriaDataToFile(personFile);
-        } else {
-            handleSaveAs();
-        }
+    	if (isInputValid()) {
+    	
+    		File personFile = mainApp.getFilePath();
+    		if (personFile != null) {
+    			mainApp.saveCriteriaDataToFile(personFile);
+    		} else {
+    			handleSaveAs();
+    		}
+    	}
     }
 
     /**
@@ -110,23 +113,26 @@ public class RootLayoutController {
      */
     @FXML
     private void handleSaveAs() {
-        FileChooser fileChooser = new FileChooser();
+    	if (isInputValid()) {
+    	
+    		FileChooser fileChooser = new FileChooser();
 
-        // Set extension filter
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+    		// Set extension filter
+    		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
                 "XML files (*.xml)", "*.xml");
-        fileChooser.getExtensionFilters().add(extFilter);
+    		fileChooser.getExtensionFilters().add(extFilter);
 
-        // Show save file dialog
-        File file = fileChooser.showSaveDialog(mainApp.getPrimaryStage());
+    		// Show save file dialog
+    		File file = fileChooser.showSaveDialog(mainApp.getPrimaryStage());
 
-        if (file != null) {
+    		if (file != null) {
             // Make sure it has the correct extension
-            if (!file.getPath().endsWith(".xml")) {
-                file = new File(file.getPath() + ".xml");
-            }
+    			if (!file.getPath().endsWith(".xml")) {
+    				file = new File(file.getPath() + ".xml");
+    			}
             mainApp.saveCriteriaDataToFile(file);
-        }
+    		}
+    	}
     }
 
     /**
@@ -166,6 +172,32 @@ public class RootLayoutController {
             // ... user chose CANCEL or closed the dialog
         }
     }
-
     
+    private boolean isInputValid() {
+		String errorMessage = "";
+		
+		if (mainApp.getIcoList().isEmpty()) {
+			errorMessage += "Please define at least one ico\n";
+		}
+			
+		if (mainApp.getCriteriaList().isEmpty()) {
+				errorMessage += "Please define at least one criteria\n";
+		} 
+		
+		if (errorMessage.length() == 0) {
+			return true;
+			
+		} else {
+			//show the error message
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.initOwner(primaryStage);
+			alert.setTitle("No sufficient Portfolio.");
+			alert.setHeaderText("No sufficient Portfolio.");
+			alert.setContentText(errorMessage);
+			
+			alert.showAndWait();
+			
+			return false;
+		}
+    }	
 }

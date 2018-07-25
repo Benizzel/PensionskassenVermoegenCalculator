@@ -316,7 +316,8 @@ public class MainApp extends Application {
 		            		"Could not load data from file:\n" +
 		            		file.getPath() + "\n\n" +
 		            		"A new Portfolio will be created.\n\n" +
-		            		"If you want to open an existing Portfolio use Menu 'File' -> 'Open'\n"
+		            		"If you want to open an existing Portfolio use Menu 'File' -> 'Open'\n" +
+		            		e
 		            ); 
 		            alert.showAndWait();
 		        }
