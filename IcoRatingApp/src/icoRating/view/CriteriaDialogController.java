@@ -14,43 +14,50 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
- * Controller Class for the NewCriteriaDialog GUI.
- * 
- * @author beniw
- *
+ * Controller Class for the CriteriaDialog GUI.
+ * The CriteriaDialog provides functionalities to manage the data of existing Criteria or
+ * to add a new Criteria
+ * @author Benjamin Wyss
  */
-
 public class CriteriaDialogController {
 	
 	@FXML
 	private TextField nameField;
-	
 	@FXML
 	private TextArea descriptionField;
-	
 	@FXML
 	private TextField categoryField;
-	
 	@FXML
 	private ComboBox<Weight> cbWeight;
-	
 	
 	private Stage dialogStage;
 	private MainApp mainApp;
 	private Criteria criteria;
 	private boolean okClicked = false;
 
+	/**
+	 * Initializes the controller class. This method is automatically called after
+	 * the fxml file has been loaded
+	 */
 	public void initialize(Criteria criteria) {
 		setCriteria(criteria);
 		setWeight();
 	}
 	
+	/**
+	 * Sets the stage of this dialog.
+	 * @param dialogStage
+	 */
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
 		dialogStage.setMaxHeight(440);
 		dialogStage.setMaxWidth(1200);
 	}
 	
+	/**
+	 * Sets the data of the provided Criteria
+	 * @param criteria
+	 */
 	private void setCriteria (Criteria criteria) {
 		this.criteria = criteria;
 		nameField.setText(criteria.getName());
@@ -59,20 +66,33 @@ public class CriteriaDialogController {
 		cbWeight.setValue(criteria.getWeight());
 	}
 	
+    /**
+     * Is called by the main application to give a reference back to itself.
+     * @param mainApp
+     */
 	public void setMainApp (MainApp mainApp) {
 		this.mainApp = mainApp;
 	}
 	
+	/**
+	 * sets possible Weight values for ComboBox
+	 */
 	private void setWeight () {
 		cbWeight.getItems().setAll(Weight.values());
 	}
 	
+	/** 
+	 * @return true if the user clicked OK, false otherwise
+	 */
 	public boolean isOkClicked() {
 		return okClicked;
 	}
 	
 	/**
-	 * Called when user clicks ok. Makes an input validation and saves the criteria
+	 * Called when user clicks ok. 
+	 * Makes an input validation and saves the Criteria.
+	 * If an ICO do not have the Criteria as IcoCriteria,
+	 * IcoCriteria will be instanced and added to ICO.
 	 */
 	@FXML
 	private void handleOk() {
@@ -85,7 +105,7 @@ public class CriteriaDialogController {
 			dialogStage.close();
 		}
 		
-		//Creates for each Ico an IcoCriteria and adds it to the Ico
+		//Creates for each ICO an IcoCriteria and adds it to the ICO
 		mainApp.getIcoList().forEach(Ico -> {
 			 boolean hasIt = false;
 	           for (final IcoCriteria c : Ico.getAllIcoCriteria()) {
@@ -136,7 +156,6 @@ public class CriteriaDialogController {
 			alert.showAndWait();
 			
 			return false;
-			
 		}
 	}
 }

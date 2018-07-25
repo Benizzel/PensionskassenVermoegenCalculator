@@ -18,11 +18,6 @@ import javafx.beans.property.StringProperty;
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class Criteria {
 	
-	/**
-	 * UUID must be stored as String because JAXB accepts only String as a XmlID
-	 * Do not delete variable and add XmlID to the method "getUuidAsString".
-	 * Elsewhere existing Portfolios cannot be loaded
-	 */
 	@XmlAttribute
 	@XmlID
 	private final String uuidString; //must be a variable because of JAXB accepts only String as an XmlID

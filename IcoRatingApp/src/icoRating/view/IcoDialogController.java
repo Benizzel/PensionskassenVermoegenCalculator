@@ -30,7 +30,9 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 /**
- * Controller Class for the EditIcoDialog GUI.
+ * Controller Class for the IcoDialog GUI.
+ * The ICO Dialog provides functionalities to manage data from existing ICOs,
+ * add a new ICO and rate an ICO.
  * @author Benjamin Wyss
  */
 public class IcoDialogController {
@@ -97,6 +99,10 @@ public class IcoDialogController {
 		}
 	}
 
+	/**
+	 * Sets the base data the provided ICO
+	 * @param ico
+	 */
 	private void setIco(Ico ico) {
 		this.ico = ico;
 		nameField.setText(ico.getName());
@@ -113,6 +119,10 @@ public class IcoDialogController {
 		});
 	}
 
+	/**
+	 * Sets the IcoCriteria data of the provided ICO
+	 * @param ico
+	 */
 	private void setIcoCriteria(Ico ico) {
 		icoCriteriaTable.setEditable(true);
 		icoCriteriaTable.setItems(ico.getAllIcoCriteria());
@@ -175,8 +185,7 @@ public class IcoDialogController {
 		});
 	}
 
-	/**
-	 * 
+	/** 
 	 * @return true if the user clicked OK, false otherwise
 	 */
 	public boolean isOkClicked() {
