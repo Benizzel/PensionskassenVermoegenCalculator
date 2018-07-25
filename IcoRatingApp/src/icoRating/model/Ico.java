@@ -1,28 +1,21 @@
 package icoRating.model;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlID;
-import javax.xml.bind.annotation.XmlIDREF;
-import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import icoRating.util.LocalDateAdapter;
 import icoRating.util.RoundUtil;
 import javafx.beans.property.FloatProperty;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleFloatProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -32,165 +25,231 @@ import javafx.collections.ObservableList;
 /**
  * Model class for an ICO.
  * 
- * @author beniw
- *
+ * @author Benjamin Wyss
  */
-
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class Ico {
 	
-//	private static int count = 0;
-	
+	/**
+	 * UUID must be stored as String because JAXB accepts only String as a XmlID
+	 * Do not delete variable and add XmlID to the method "getUuidAsString".
+	 * Elsewhere existing Portfolios cannot be loaded
+	 */
 	@XmlAttribute
 	@XmlID
-	//
 	private String uuidString;
 	private UUID uuid;
 	
-	private StringProperty name;
+	/**
+	 * PropertyVariable must be final so that the ui controller is able to listen to it. 
+	 * Variable is final but the String it represents can change using setter method
+	 */
+	private final StringProperty name;
 	private final StringProperty description;
-	private FloatProperty rating;
-	private ObjectProperty<LocalDate> startDate;
-	private ObjectProperty<LocalDate> endDate;
-	private FloatProperty investment;
+	private final FloatProperty rating;
+	private final ObjectProperty<LocalDate> startDate;
+	private final ObjectProperty<LocalDate> endDate;
+	private final FloatProperty investment;
 	
-	//@XmlIDREF
+	/**
+	 * IcoCriteria are added as Element from Ico to the XML
+	 */
 	@XmlElement(name="icoCriteriaReference")
-
 	private ArrayList<IcoCriteria> allIcoCriteria;
 	
 	
 	/**
 	 * Default constructor.
 	 */
-	
-	//TODO
-	//scheinbar muss im constructor, wenn objekt ohne instanzvariablen instanziert wird, für alle string attribut ein "null" mitgegeben werden.. also hier this(null) - mal
-	//nachforschen, wieso das so ist...
 	public Ico() {
 		this(null, null);
 		allIcoCriteria = new ArrayList<IcoCriteria>();
-		
-		//id=Integer.toString(count++);
 	}
-	
+
 	/**
-	 * Constructor with some initial data.
-	 * Die Auskommentierten Codezeilen würden "richtige" Daten erzeugen. Die anderen instanzieren mit 0
+	 * Constructor
+	 * @param name
+	 * @param description
 	 */
-	
 	public Ico(String name, String description) {
 		this.name = new SimpleStringProperty(name);
 		this.description = new SimpleStringProperty(description);
-		//Some initial dummy data, just for convenient testing - diese dummy daten werden jedem ICO, den ich mit di
 		this.rating = new SimpleFloatProperty();
-		//this.startDate = new SimpleObjectProperty<LocalDate>(LocalDate.of(2018, 05, 12));
 		this.startDate = new SimpleObjectProperty<LocalDate>();
-		//this.endDate = new SimpleObjectProperty<LocalDate>(LocalDate.of(2018, 05.15));
 		this.endDate = new SimpleObjectProperty<LocalDate>();
-		//this.investment = new SimpleFloatProperty((float) 999.25);
 		this.investment = new SimpleFloatProperty();
-		//private ObservableList<Criteria> possibleCriteria = FXCollections.observableArrayList()
 		uuid = UUID.randomUUID();
 		uuidString = uuid.toString();
 	}
-
+	
+	/**
+	 * @return the UUID as a String
+	 */
+	public String getUuidAsString() {
+		return uuidString;
+	}
+	
+	/**
+	 * @return the UUID
+	 */
+	public UUID getUuid() {
+		return uuid;
+	}
+	
+	/**
+	 * @return name as String
+	 */
 	public String getName() {
 		return name.get();
 	}
 	
-	//nimmt den String "name" und speichert es als StringObject in der variable "name" vom Object
+	/**
+	 * @param name
+	 */
 	public void setName (String name) {
 		this.name.set(name);
 	}
 	
-	//wird für das GUI benötigt - Ich nenne die Variable nameProperty, inhalt ist variable name
+	/**
+	 * @return name as StringProperty
+	 */
 	public StringProperty nameProperty() {
 		return name;
 	}
 	
+	/**
+	 * @return description as String
+	 */
 	public String getDescription() {
 		return description.get();
 	}
 	
+	/**
+	 * @param description
+	 */
 	public void setDescription (String description) {
 		this.description.set(description);
 	}
 	
+	/**
+	 * @return description as StringProperty
+	 */
 	public StringProperty descriptionProperty() {
 		return description;
 	}
 	
-	//wert aus variable rating wird als Integer Object zurückgegeben	
+	/**
+	 * @return Overall ICO rating as Float
+	 */
 	public Float getRating() {
-//		calculateRating();
 		return rating.get();
 	}
 	
+	/**
+	 * @return Overall ICO rating as FloatProperty
+	 */
 	public FloatProperty ratingProperty() {
-//		calculateRating();
 		return rating;
 	}
 	
+	/**
+	 * Uses LocalDateAdapter so save date into XML
+	 * @return start date as LocalDate
+	 */
 	@XmlJavaTypeAdapter(LocalDateAdapter.class)
 	public LocalDate getStartDate() {
 		return startDate.get();
 	}
 	
+	/**
+	 * @param startDate
+	 */
 	public void setStartDate (LocalDate startDate) {
 		this.startDate.set(startDate);
 	}
 	
+	/**
+	 * @return start date a ObjectProperty of type LocalDate
+	 */
 	public ObjectProperty<LocalDate> startDateProperty() {
 		return startDate;
 	}
 	
+	/**
+	 * Uses LocalDateAdapter so save date into XML
+	 * @return end date as LocalDate
+	 */
 	@XmlJavaTypeAdapter(LocalDateAdapter.class)
 	public LocalDate getEndDate() {
 		return endDate.get();
 	}
 	
+	/**
+	 * @param endDate
+	 */
 	public void setEndDate (LocalDate endDate) {
 		this.endDate.set(endDate);
 	}
 	
+	/**
+	 * @return end date a ObjectProperty of type LocalDate
+	 */
 	public ObjectProperty<LocalDate> endDateProperty() {
 		return endDate;
 	}
 	
+	/**
+	 * @return investement as float
+	 */
 	public Float getInvestment () {
 		return investment.get();
 	}
-
+	
+	/**
+	 * @param investment
+	 */
 	public void setInvestment (Float investment) {
 		this.investment.set(investment);
 	}
 	
+	/**
+	 * @return investment as FloatProperty
+	 */
 	public FloatProperty investmentProperty() {
 		return investment;
 	}
 	
 	/**
-	 * 
-	 * @return List of all Criteria from the Ico
+	 * @return ObservableList of all IcoCriteria from the ICO
 	 */
-	
-//	@XmlElement(name="icoCriteriaReference")
-//	@XmlIDREF
 	public ObservableList<IcoCriteria> getAllIcoCriteria() {
 		ObservableList<IcoCriteria> oAllIcoCriteria = FXCollections.observableArrayList(allIcoCriteria);
 		return oAllIcoCriteria;
 	}
 	
+	/**
+	 * Adds list of IcoCriteria to the Ico
+	 * Current IcoCriteria will be overwritten
+	 * Used to load data from XML
+	 * @param criteriaList
+	 */
 	public void setIcoCriterion(ArrayList<IcoCriteria> criteriaList) {
 		allIcoCriteria = criteriaList;
-//		allIcoCriteria = (ObservableList<IcoCriteria>) criteriaList;
 	}
 	
+	/**
+	 * Adds an IcoCriteria to the ICO. 
+	 * Typically needed when a new Criteria or a new ICO is created
+	 * @param IcoCriteria
+	 */
 	public void addCriteria (IcoCriteria criteria) {
 		allIcoCriteria.add(criteria);
 	}
 	
+	/**
+	 * Returns all IcoCriteria of the ICO in state inactive
+	 * @return ObservableList 
+	 */
 	public ObservableList<IcoCriteria> getInactiveIcoCriteria() {
 		ObservableList<IcoCriteria> inactiveCriteria = FXCollections.observableArrayList();
 		for (IcoCriteria c : allIcoCriteria) {
@@ -201,6 +260,10 @@ public class Ico {
 		return inactiveCriteria;
 	}
 	
+	/**
+	 * Returns all IcoCriteria of the ICO in state active
+	 * @return ObservableList
+	 */
 	public ObservableList<IcoCriteria> getActiveIcoCriteria() {
 		ObservableList<IcoCriteria> activeCriteria = FXCollections.observableArrayList();
 		for (IcoCriteria c : allIcoCriteria) {
@@ -211,32 +274,31 @@ public class Ico {
 		return activeCriteria;
 	}
 	
+	/**
+	 * Removes an IcoCriteria from the ICO
+	 * Typically used when a Criteria is deleted
+	 * @param Criteria
+	 */
 	public void removeIcoCriteria (Criteria criteria) {
 		for (IcoCriteria c : allIcoCriteria) {
 			if (c.getCriteria() == criteria) {
 				allIcoCriteria.remove(c);		
-				
 			}
 		}
 	}
 	
 	/**
-	 * @return the id
+	 * Calculates the weighted overall rating of the ICO.
+	 * Formula:
+	 * - For each ACTIVE IcoCriteria calculate [rating] * [weight from Criteria]
+	 * - Sum up the weighted rating of each IcoCriteria = SUM(WeightedRating)
+	 * - Sum up the used weights from Criteria = SUM(Weights)
+	 * - SUM(WeightedRating) DIVIDED BY SUM(Weights) = Rating
+	 * 
 	 */
-//	@XmlAttribute
-//	@XmlID
-	public String getUuidAsString() {
-		return uuidString;
-	}
-	
-	public UUID getUuid() {
-		return uuid;
-	}
-	
 	public void calculateRating() {
 		
 		ArrayList<Integer> weightedRatings = new ArrayList<Integer>();
-//		ArrayList<Integer> weights = new ArrayList<Integer>();
 		
 		int sumWeights = 0;
 		float r = 0;
@@ -247,31 +309,20 @@ public class Ico {
 				int weightedRating = (c.getRating() * c.getCriteria().getWeightAsInt());
 				int weight = c.getCriteria().getWeightAsInt();
 				weightedRatings.add(weightedRating);
-//				weights.add(weight);
-				sumWeights += weight; // => totalWeight = totalWeight + weight. kann ich mit += machen und brauche kein array
+				sumWeights += weight; // => sums up all weight
 			}
 		}
-//		Variante 1
-		if (sumWeights > 0) {
+		if (sumWeights > 0) { // prevent division by 0
 			for (Integer weightedRating : weightedRatings) {
-				r += (weightedRating / (float)sumWeights);
-			//rechnet: Gewichtetes Rating / Gewicht - jedes einzeln und summiert fortlaufend
+				/*
+				 * divides each rating with the sum of weights and sums up the result
+				 * mathematically the same would be to sum up the rating first an divide it afterwards of the sum of weights
+				 * one of the parameter must be float to get a float as a result
+				 */
+				r += (weightedRating / (float)sumWeights); // => 
 			}
 		}
 		rRound = RoundUtil.round(r, 2);
-		
-//		Variante 2
-//		int sumWeigthedRatings = 0;
-//		sumWeigthedRatings = weightedRatings.stream().mapToInt(Integer::intValue).sum();
-//		sumWeights = weights.stream().mapToInt(Integer::intValue).sum();
-//		if (sumWeights > 0) {
-//			r = (sumWeigthedRatings / (float)sumWeights);
-//			rRound = RoundUtil.round(r, 2);
-//		} else {
-//			r = 0;
-//		}
-		
 		rating.set(rRound);
-	}
-		
+	}	
 }
