@@ -8,6 +8,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlID;
 
 import icoRating.util.Weight;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -30,13 +32,13 @@ public class Criteria {
 	private final StringProperty name;
 	private final StringProperty description;
 	private final StringProperty category;
-	private Weight weight;
+	private final ObjectProperty<Weight> weight;
 	
 	/**
 	 * Default Constructor
 	 */
 	public Criteria() {
-		this(null, null, null, Weight.MEDIUM);
+		this(null, null, null, null);
 	}
 	
 	/**
@@ -50,7 +52,7 @@ public class Criteria {
 		this.name = new SimpleStringProperty(name);
 		this.description = new SimpleStringProperty(description);
 		this.category = new SimpleStringProperty(category);	
-		this.setWeight(weight);
+		this.weight = new SimpleObjectProperty<Weight>();
 		uuid = UUID.randomUUID();
 		uuidString = uuid.toString();
 	}
@@ -137,23 +139,14 @@ public class Criteria {
 	 * @return the weight as enum Weight
 	 */
 	public Weight getWeight() {
-		return weight;
-	}
-	
-	/**
-	 * @return text of Weight as a StringProperty
-	 */
-	public StringProperty getWeightAsStringProperty() {
-		StringProperty weightString = new SimpleStringProperty();
-		weightString.setValue(weight.getText());
-		return weightString;
+		return weight.get();
 	}
 	
 	/**
 	 * @return code of Weight as an int
 	 */
 	public int getWeightAsInt() {
-		int weightInt = weight.getCode();
+		int weightInt = weight.get().getCode();
 		return weightInt;
 	}
 
@@ -161,7 +154,13 @@ public class Criteria {
 	 * @param enum weight to set
 	 */
 	public void setWeight(Weight weight) {
-		 this.weight = weight;
-		 
+		 this.weight.set(weight);
+	}
+	
+	/**
+	 * @return Weight as a ObjectProperty
+	 */
+	public ObjectProperty<Weight> WeightProperty() {
+		return weight;
 	}
 }

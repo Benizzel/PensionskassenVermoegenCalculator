@@ -290,10 +290,11 @@ public class Ico {
 	/**
 	 * Calculates the weighted overall rating of the ICO.
 	 * Formula:
-	 * - For each ACTIVE IcoCriteria calculate [rating] * [weight from Criteria]
-	 * - Sum up the weighted rating of each IcoCriteria = SUM(WeightedRating)
-	 * - Sum up the used weights from Criteria = SUM(Weights)
-	 * - SUM(WeightedRating) DIVIDED BY SUM(Weights) = Rating
+	 * <ul>
+	 * <li>1: For each ACTIVE IcoCriteria calculate [rating] * [weight from Criteria]
+	 * <li>2: Sum up the weighted rating of each IcoCriteria = SUM(WeightedRating)
+	 * <li>3: Sum up the used weights from Criteria = SUM(Weights)
+	 * <li>4: SUM(WeightedRating) DIVIDED BY SUM(Weights) = Rating
 	 * 
 	 */
 	public void calculateRating() {

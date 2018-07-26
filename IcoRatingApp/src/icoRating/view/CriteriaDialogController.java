@@ -111,6 +111,7 @@ public class CriteriaDialogController {
 	           for (final IcoCriteria c : Ico.getAllIcoCriteria()) {
 	               if (c.getCriteria().getUuid().equals(criteria.getUuid())) {
 	                   hasIt = true;
+	                   Ico.calculateRating();
 	               }
 	           }
 	           if (!hasIt) {
