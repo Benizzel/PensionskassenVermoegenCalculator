@@ -80,36 +80,18 @@ public class OverviewController {
      */
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
+		setData();
 	}
 	
 	/**
-	 * add observable list data and event handler to the ico table
+	 * add observable list data and event handler to the ico and criteria table
 	 * calculates rating of ico so that up to date rating is shown
 	 */
-	public void setIcoData() {
+	public void setData() {
 		/*
 		 * add observable list data and event handler to the ico table
 		 * calculates rating of ICO so that up to date rating is shown
 		 */
-		mainApp.getIcoList().forEach(ico -> ico.calculateRating());
-		icoTable.setItems(mainApp.getIcoList());
-		icoTable.setRowFactory( tv -> {
-		    TableRow<Ico> row = new TableRow<>();
-		    row.setOnMouseClicked(event -> {
-		        if (event.getClickCount() == 2 && (!row.isEmpty()) ) {
-		            handleEditIco();
-		        }
-		    });
-		    return row ;
-		});
-	}
-	
-	/**
-	 * add observable list data and event handler to the ico table
-	 * calculates rating of ico so that up to date rating is shown
-	 */
-	public void setCriteriaData() {
-
 		mainApp.getIcoList().forEach(ico -> ico.calculateRating());
 		icoTable.setItems(mainApp.getIcoList());
 		icoTable.setRowFactory( tv -> {
@@ -134,6 +116,7 @@ public class OverviewController {
 		    return row ;
 		});
 	}
+
 	
 	/**
 	 * Called when the user clicks on the delete ICO button

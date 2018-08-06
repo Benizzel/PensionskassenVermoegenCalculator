@@ -40,15 +40,6 @@ public class MainApp extends Application {
     private final ObservableList<Ico> icoList = FXCollections.observableArrayList();
     
     /**
-     * launches the app
-     * @param args
-     */
-    
-    public static void main(String[] args) {
-        launch(args);
-    }
-    
-    /**
      * Default Constructor
      */
     public MainApp() {
@@ -80,7 +71,7 @@ public class MainApp extends Application {
         this.primaryStage.setTitle("IcoRatingApp");
         this.primaryStage.getIcons().add(new Image("file:resources/images/RocketMoon.png"));
         initRootLayout();
-        showIcoOverview();
+        showOverview();
     }
     
     /**
@@ -113,7 +104,7 @@ public class MainApp extends Application {
 
         // Try to load last opened person file.
         File file = getFilePath();
-        if (file.exists()) {
+        if (file != null && (file.exists())) {
             loadPortfolioDataFromFile(file);
         } else {
         	Alert alert = new Alert(AlertType.INFORMATION);
@@ -132,7 +123,7 @@ public class MainApp extends Application {
     /**
      * Shows the Ico overview inside the root layout.
      */
-    public void showIcoOverview() {
+    public void showOverview() {
     	try {
     		//Load ico overview
     		FXMLLoader loader = new FXMLLoader();
@@ -145,8 +136,7 @@ public class MainApp extends Application {
     		//Give the controller access to the main app.
     		OverviewController controller = loader.getController();
     		controller.setMainApp(this);
-    		controller.setIcoData();
-    		controller.setCriteriaData();
+    		controller.setData();
     	} catch (IOException e) {
     		e.printStackTrace();
     	}
@@ -333,5 +323,14 @@ public class MainApp extends Application {
 
 			alert.showAndWait();
 		}
-	}		    
+	}
+	
+    /**
+     * launches the app
+     * @param args
+     */
+    
+    public static void main(String[] args) {
+        launch(args);
+    }
 }
