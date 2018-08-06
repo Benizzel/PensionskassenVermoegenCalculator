@@ -79,17 +79,19 @@ public class RootLayoutController {
         alert.setTitle("IcoRatingApp");
         alert.setHeaderText("Save current Portfolio");
         alert.setContentText("Do you want to save changes?");
-        ButtonType buttonTypeOne = new ButtonType("Save");
-        ButtonType buttonTypeTwo = new ButtonType("Discard Changes");
-        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
-        alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeCancel);
+        ButtonType buttonSave = new ButtonType("Save");
+        ButtonType buttonDiscard = new ButtonType("Discard Changes");
+        ButtonType buttonCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(buttonSave, buttonDiscard, buttonCancel);
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == buttonTypeOne){
-            handleSave();
-            alert.close();
-        } else if (result.get() == buttonTypeCancel) {
+        if (result.get() == buttonCancel) {
         	alert.close();
-        } else {
+        } else if (result.get() != buttonCancel) {
+        	
+        	if (result.get() == buttonSave) {
+        		handleSave();
+        	}
+        	
         	final FileChooser fileChooser = new FileChooser();
 
             // Set extension filter
@@ -102,7 +104,7 @@ public class RootLayoutController {
 
             if (file != null) {
                 mainApp.loadPortfolioDataFromFile(file);
-            }
+            }        	
         }
     }
 
