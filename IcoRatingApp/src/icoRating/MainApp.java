@@ -104,15 +104,16 @@ public class MainApp extends Application {
 
         // Try to load last opened person file.
         File file = getFilePath();
-        if (file != null && (file.exists())) {
+        if (file != null && file.exists()) {
             loadPortfolioDataFromFile(file);
         } else {
         	Alert alert = new Alert(AlertType.INFORMATION);
     		alert.setTitle("Portfolio");
     		alert.setHeaderText("Could not find last Portfolio");
     		alert.setContentText(
-        		"Could not find a Portfolio in \n" +
-        		file.getPath() + "\n\n" +
+        		"Could not find an existing Portfolio.\n\n" +
+//    			Attention: Do not use file.getPath because at initial installation there is no filePath which results in a nullPointer
+//        		file.getPath() + "\n\n" + 
         		"A new Portfolio will be created.\n\n" +
         		"If you want to open an existing Portfolio use Menu 'File'->'Open'\n\n"
     		); 
