@@ -1,5 +1,7 @@
 package icoRating.view;
 
+import java.time.LocalDate;
+
 import icoRating.model.Ico;
 import icoRating.model.IcoCriteria;
 import icoRating.util.Rating;
@@ -157,6 +159,7 @@ public class IcoDialogController {
 			IcoCriteria criteria = event.getTableView().getItems().get(row);
 			criteria.setRating(newRating);
 			ico.calculateRating();
+			
 		});	
 		//set Value of Active Column and ad Listener
 		icoCriteriaActiveColumn.setCellValueFactory(new Callback<CellDataFeatures<IcoCriteria, Boolean>, ObservableValue<Boolean>>() {
@@ -263,9 +266,22 @@ public class IcoDialogController {
 	 */
 	private boolean isInputValid() {
 		String errorMessage = "";
+		LocalDate s = startDateField.getValue();
+		LocalDate e = endDateField.getValue();
 
 		if (nameField.getText() == null || nameField.getText().length() == 0) {
-			errorMessage += "No valid name!\n";
+			errorMessage += "No valid name\n";
+		}
+
+		/* 
+		 * ^ is XOR Operator in Java. A possible check could be:
+		 * if (s == null ^ e == null) {
+		 * errorMessage += "Start and End Date: Please choose both or none\n";
+		 */
+		if (s != null && e != null) {
+			if (s.isAfter(e)) {
+				errorMessage += "Start Date must be prior or equal to End Date.\n";
+			}
 		}
 
 		if (investmentField.getText() == null || investmentField.getText().length() == 0) {
@@ -274,7 +290,7 @@ public class IcoDialogController {
 			// try to parse the Investment amount into a float.
 			try {
 				Float.parseFloat(investmentField.getText());
-			} catch (NumberFormatException e) {
+			} catch (NumberFormatException nE) {
 				errorMessage += "No valid investment amount (must be a number)";
 			}
 		}

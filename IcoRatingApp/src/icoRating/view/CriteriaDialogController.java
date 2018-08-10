@@ -141,7 +141,7 @@ public class CriteriaDialogController {
 		}
 		
 		if (cbWeight.getValue() == null)   {
-			errorMessage += "No valid weight!\n";
+			errorMessage += "Weight must be selected!\n";
 		}
 		
 		if (errorMessage.length() == 0) {

@@ -72,7 +72,16 @@ public class MainApp extends Application {
         this.primaryStage.getIcons().add(new Image("file:resources/images/RocketMoon.png"));
         initRootLayout();
         showOverview();
-    }
+    }  
+    
+    @Override
+    public void stop(){
+
+    	    System.out.println("Stage is closing");
+    	    // Save file
+    	}
+        // Save file
+    
     
     /**
      * Initializes the root layout and tries to load the last opened
@@ -90,13 +99,18 @@ public class MainApp extends Application {
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
-            
-
+                       
             // Give the controller access to the main app.
             RootLayoutController controller = loader.getController();
             controller.setMainApp(this);
             controller.setPrimaryStage(primaryStage);
-
+            
+            // Catches Window Closing Event
+            primaryStage.setOnCloseRequest(event -> {
+            	event.consume();
+            	controller.handleExit();
+            });
+            
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -121,6 +135,7 @@ public class MainApp extends Application {
         }
     }
     
+
     /**
      * Shows the Ico overview inside the root layout.
      */
@@ -291,8 +306,14 @@ public class MainApp extends Application {
 		} catch (Exception e) { // catches ANY exception
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error loading data");
-			alert.setHeaderText("Could not load data from file");
-			alert.setContentText("File is not valid.\n\n" + "Error Message:\n\n" + e);
+			alert.setHeaderText("Could not load data from file.");
+			alert.setContentText("File is not valid. Please chose another one.\n\n" + "Error Message:\n\n" + e);
+			
+			// Delete file path when exception occurs while opening
+			Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
+			prefs.remove("filePath");
+			primaryStage.setTitle("IcoRatingApp");
+			
 		    alert.showAndWait();
 		  }	    
 	}
@@ -321,7 +342,7 @@ public class MainApp extends Application {
 			alert.setTitle("Error");
 			alert.setHeaderText("Could not save data");
 			alert.setContentText("Could not save data to file:\n" + file.getPath() + "\n\n" + e);
-
+			
 			alert.showAndWait();
 		}
 	}

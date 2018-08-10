@@ -45,28 +45,31 @@ public class RootLayoutController {
      */
     @FXML
     private void handleNew() {
-    	Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("IcoRatingApp");
-        alert.setHeaderText("New Portfolio");
-        alert.setContentText("New Portfolio will be created. \n" + "Do you want to save changes at current portfolio?");
-        ButtonType buttonTypeOne = new ButtonType("Save & New");
-        ButtonType buttonTypeTwo = new ButtonType("Discard Changes");
-        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
-        alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeCancel);
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == buttonTypeOne){
-            handleSave();
-            mainApp.getCriteriaList().clear();
-            mainApp.getIcoList().clear();
-            mainApp.setFilePath(null);
-            alert.close();
-        } else if (result.get() == buttonTypeTwo) {
-        	mainApp.getCriteriaList().clear();
-            mainApp.getIcoList().clear();
-            mainApp.setFilePath(null);
-        } else {
-            // ... user chose CANCEL or closed the dialog
-        }
+    	if (!mainApp.getIcoList().isEmpty() || !mainApp.getCriteriaList().isEmpty()) {
+	    	Alert alert = new Alert(AlertType.CONFIRMATION);
+	        alert.setTitle("IcoRatingApp");
+	        alert.setHeaderText("New Portfolio");
+	        alert.setContentText("New Portfolio will be created. \n" + "Do you want to save changes at current portfolio?");
+	        ButtonType buttonTypeOne = new ButtonType("Save & New");
+	        ButtonType buttonTypeTwo = new ButtonType("Discard Changes");
+	        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+	        alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeCancel);
+	        Optional<ButtonType> result = alert.showAndWait();
+	        if (result.get() == buttonTypeOne){
+	            handleSave();
+	            mainApp.getCriteriaList().clear();
+	            mainApp.getIcoList().clear();
+	            mainApp.setFilePath(null);
+	            alert.close();
+	            return;
+	        } else if (result.get() == buttonTypeCancel) {
+	        	alert.close();
+	        	return;
+	        }  
+    	}
+    	mainApp.getCriteriaList().clear();
+        mainApp.getIcoList().clear();
+        mainApp.setFilePath(null);
     }
 
     /**
@@ -75,38 +78,41 @@ public class RootLayoutController {
      */
     @FXML
     private void handleOpen() {
-    	Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("IcoRatingApp");
-        alert.setHeaderText("Save current Portfolio");
-        alert.setContentText("Do you want to save changes?");
-        ButtonType buttonSave = new ButtonType("Save");
-        ButtonType buttonDiscard = new ButtonType("Discard Changes");
-        ButtonType buttonCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
-        alert.getButtonTypes().setAll(buttonSave, buttonDiscard, buttonCancel);
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == buttonCancel) {
-        	alert.close();
-        } else if (result.get() != buttonCancel) {
-        	
-        	if (result.get() == buttonSave) {
-        		handleSave();
-        	}
-        	
-        	final FileChooser fileChooser = new FileChooser();
+    	if (!mainApp.getIcoList().isEmpty() || !mainApp.getCriteriaList().isEmpty()) {
+	    	Alert alert = new Alert(AlertType.CONFIRMATION);
+	        alert.setTitle("IcoRatingApp");
+	        alert.setHeaderText("Save current Portfolio");
+	        alert.setContentText("Do you want to save changes?");
+	        ButtonType buttonSave = new ButtonType("Save");
+	        ButtonType buttonDiscard = new ButtonType("Discard Changes");
+	        ButtonType buttonCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+	        alert.getButtonTypes().setAll(buttonSave, buttonDiscard, buttonCancel);
+	        Optional<ButtonType> result = alert.showAndWait();
+	        if (result.get() == buttonCancel) {
+	        	alert.close();
+	        	return;
+	        } 
+	        	
+	        if (result.get() == buttonSave && isPortfolioValid()) {
+	        	handleSave();
+	        } else {
+	        	return;
+	        }
+    	}  	
+		final FileChooser fileChooser = new FileChooser();
 
-            // Set extension filter
-            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
-                    "XML files (*.xml)", "*.xml");
-            fileChooser.getExtensionFilters().add(extFilter);
+		// Set extension filter
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
+		fileChooser.getExtensionFilters().add(extFilter);
 
-            // Show open file dialog
-            final File file = fileChooser.showOpenDialog(mainApp.getPrimaryStage());
+		// Show open file dialog
+		final File file = fileChooser.showOpenDialog(mainApp.getPrimaryStage());
 
-            if (file != null) {
-                mainApp.loadPortfolioDataFromFile(file);
-            }        	
-        }
+		if (file != null) {
+			mainApp.loadPortfolioDataFromFile(file);
+		}
     }
+    
 
     /**
      * Saves the file to the portfolio file that is currently open. If there is no
@@ -148,7 +154,7 @@ public class RootLayoutController {
     				file = new File(file.getPath() + ".xml");
     			}
             mainApp.savePortfolioDataToFile(file);
-    		}
+    		} 
     	}
     }
 
@@ -169,25 +175,29 @@ public class RootLayoutController {
      * Closes the application.
      */
     @FXML
-    private void handleExit() {
-    	Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("IcoRatingApp");
-        alert.setHeaderText("Exit");
-        alert.setContentText("Do you want to save changes?");
-        ButtonType buttonTypeOne = new ButtonType("Save");
-        ButtonType buttonTypeTwo = new ButtonType("Discard Changes");
-        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
-        alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeCancel);
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == buttonTypeOne){
-            handleSave();
-            alert.close();
-            System.exit(0);
-        } else if (result.get() == buttonTypeTwo) {
-        	System.exit(0);
-        } else {
-            // ... user chose CANCEL or closed the dialog
-        }
+    public void handleExit() {
+    	if (mainApp.getIcoList().isEmpty() && mainApp.getCriteriaList().isEmpty()) {
+    		System.exit(0);
+    	} else if (isPortfolioValid()) {
+	    	Alert alert = new Alert(AlertType.CONFIRMATION);
+	        alert.setTitle("IcoRatingApp");
+	        alert.setHeaderText("Exit");
+	        alert.setContentText("Do you want to save changes?");
+	        ButtonType buttonTypeOne = new ButtonType("Save");
+	        ButtonType buttonTypeTwo = new ButtonType("Discard Changes");
+	        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+	        alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeCancel);
+	        Optional<ButtonType> result = alert.showAndWait();
+	        if (result.get() == buttonTypeOne){
+	            handleSave();
+	            alert.close();
+	            System.exit(0);
+	        } else if (result.get() == buttonTypeTwo) {
+	        	System.exit(0);
+	        } else {
+	            // ... user chose CANCEL or closed the dialog
+	        }
+    	}
     }
     
     /**
@@ -217,10 +227,18 @@ public class RootLayoutController {
 			alert.setTitle("No sufficient Portfolio.");
 			alert.setHeaderText("No sufficient Portfolio. Could not save data.");
 			alert.setContentText(errorMessage);
-			
-			alert.showAndWait();
+			ButtonType buttonTypeOne = new ButtonType("Discard & Exit");
+	        ButtonType buttonTypeTwo = new ButtonType("OK");
+	        alert.getButtonTypes().setAll(buttonTypeTwo, buttonTypeOne);
+	        Optional<ButtonType> result = alert.showAndWait();
+	        if (result.get() == buttonTypeOne){
+	            alert.close();
+	            System.exit(0);
+	        } else {
+	        	//do nothing
+	        } 
 			
 			return false;
 		}
-    }	
+    }    
 }
