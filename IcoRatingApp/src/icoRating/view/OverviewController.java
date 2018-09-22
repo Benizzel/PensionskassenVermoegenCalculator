@@ -7,12 +7,15 @@ import icoRating.model.Criteria;
 import icoRating.model.Ico;
 import icoRating.model.IcoCriteria;
 import icoRating.util.Weight;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 
 /**
  * Controller Class for the IcoOverview GUI.
@@ -45,6 +48,18 @@ public class OverviewController {
 	private TableColumn <Criteria, String> criteriaTableCategoryColumn;
 	@FXML
 	private TableColumn <Criteria, Weight> criteriaTableWeightColumn;
+    @FXML
+    private ChoiceBox<String> searchForIco;
+    @FXML
+    private TextField searchTermIco;
+    @FXML
+    private ChoiceBox<String> searchForCriteria;
+    @FXML
+    private TextField searchTermCriteria;
+    
+    // Filtered List used for TableView and Search Functionality
+    private FilteredList<Ico> flIco;
+    private FilteredList<Criteria> flCriteria;
 	
 	
 	private MainApp mainApp;
@@ -72,6 +87,52 @@ public class OverviewController {
 		criteriaTableDescriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
 		criteriaTableCategoryColumn.setCellValueFactory(cellData -> cellData.getValue().categoryProperty());
 		criteriaTableWeightColumn.setCellValueFactory(cellData -> cellData.getValue().WeightProperty());
+		
+		searchForIco.getItems().addAll("Name", "Start Date", "End Date", "Investment", "Rating");
+        searchForIco.setValue("Name");
+        
+        searchTermIco.setOnKeyReleased(keyEvent ->
+        {
+            switch (searchForIco.getValue())
+            {
+                case "Name":
+                    flIco.setPredicate(i -> i.getName().toLowerCase().contains(searchTermIco.getText().toLowerCase().trim()));
+                    break;
+                case "Start Date":
+                    flIco.setPredicate(i -> (icoRating.util.DateUtil.format(i.getStartDate()).toLowerCase().contains(searchTermIco.getText().toLowerCase().trim())));
+                    break;
+                case "End Date":
+                    flIco.setPredicate(i -> (icoRating.util.DateUtil.format(i.getEndDate()).toLowerCase().contains(searchTermIco.getText().toLowerCase().trim())));
+                    break;
+                case "Investment":
+                    flIco.setPredicate(i -> i.getInvestment().toString().toLowerCase().contains(searchTermIco.getText().toLowerCase().trim()));
+                    break;  
+                case "Rating":
+                    flIco.setPredicate(i -> i.getRating().toString().toLowerCase().contains(searchTermIco.getText().toLowerCase().trim()));
+                    break;
+            }
+        });
+        
+        searchForCriteria.getItems().addAll("Name", "Category", "Weight");
+        searchForCriteria.setValue("Name");
+        
+        searchTermCriteria.setOnKeyReleased(keyEvent ->
+        {
+            switch (searchForCriteria.getValue())
+            {
+                case "Name":
+                    flCriteria.setPredicate(c -> c.getName().toLowerCase().contains(searchTermCriteria.getText().toLowerCase().trim()));
+                    break;
+                case "Category":
+                    flCriteria.setPredicate(c -> c.getCategory().toLowerCase().contains(searchTermCriteria.getText().toLowerCase().trim()));
+                    break;
+    			case "Weight":
+    				flCriteria.setPredicate(c -> c.getWeight().toString().toLowerCase().contains(searchTermCriteria.getText().toLowerCase().trim()));
+    				break;
+            }
+        });
+        
+        
 	}
 
     /**
@@ -93,7 +154,8 @@ public class OverviewController {
 		 * calculates rating of ICO so that up to date rating is shown
 		 */
 		mainApp.getIcoList().forEach(ico -> ico.calculateRating());
-		icoTable.setItems(mainApp.getIcoList());
+		flIco = new FilteredList<Ico>(mainApp.getIcoList());
+		icoTable.setItems(flIco);
 		icoTable.setRowFactory( tv -> {
 		    TableRow<Ico> row = new TableRow<>();
 		    row.setOnMouseClicked(event -> {
@@ -105,7 +167,8 @@ public class OverviewController {
 		});
 		
 		//add observable list data and event handler to the criteria table
-		criteriaTable.setItems(mainApp.getCriteriaList());
+		flCriteria = new FilteredList<Criteria>(mainApp.getCriteriaList());
+		criteriaTable.setItems(flCriteria);
 		criteriaTable.setRowFactory( tv -> {
 		    TableRow<Criteria> row = new TableRow<>();
 		    row.setOnMouseClicked(event -> {

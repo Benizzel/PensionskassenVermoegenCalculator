@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="440.0" maxWidth="1200.0" prefHeight="440.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="icoRating.view.CriteriaDialogController">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="icoRating.view.CriteriaDialogController">
    <children>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Criteria" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
          <font>
