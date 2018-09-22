@@ -130,9 +130,7 @@ public class OverviewController {
     				flCriteria.setPredicate(c -> c.getWeight().toString().toLowerCase().contains(searchTermCriteria.getText().toLowerCase().trim()));
     				break;
             }
-        });
-        
-        
+        });   
 	}
 
     /**
@@ -188,8 +186,10 @@ public class OverviewController {
 	private void handleDeleteIco() {
 		int selectedIndex = icoTable.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
-			icoTable.getItems().get(selectedIndex).getAllIcoCriteria().removeAll();
-			icoTable.getItems().remove(selectedIndex);
+			
+			mainApp.getIcoList().get(selectedIndex).getAllIcoCriteria().removeAll();
+			mainApp.getIcoList().remove(selectedIndex);
+
 		} else {
 			//Nothing selected
 			Alert alert = new Alert(AlertType.WARNING);
@@ -251,7 +251,7 @@ public class OverviewController {
 		int selectedIndex = criteriaTable.getSelectionModel().getSelectedIndex();
 		Criteria selectedCriteria = criteriaTable.getSelectionModel().getSelectedItem();
 		if (selectedIndex >= 0) {
-			criteriaTable.getItems().remove(selectedIndex);
+			mainApp.getCriteriaList().remove(selectedIndex);
 			mainApp.getIcoList().forEach(Ico -> Ico.removeIcoCriteria(selectedCriteria));
 			mainApp.getIcoList().forEach(Ico -> Ico.calculateRating());
 		} else {
