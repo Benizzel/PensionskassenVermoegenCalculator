@@ -73,7 +73,6 @@ public class MainApp extends Application {
         initRootLayout();
         showOverview();
     }  
-    
     @Override
     public void stop(){
 

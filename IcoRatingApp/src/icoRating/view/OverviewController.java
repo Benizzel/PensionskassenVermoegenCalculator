@@ -88,6 +88,9 @@ public class OverviewController {
 		criteriaTableCategoryColumn.setCellValueFactory(cellData -> cellData.getValue().categoryProperty());
 		criteriaTableWeightColumn.setCellValueFactory(cellData -> cellData.getValue().WeightProperty());
 		
+		/*
+		 * ICO search functionality
+		 */
 		searchForIco.getItems().addAll("Name", "Start Date", "End Date", "Investment", "Rating");
         searchForIco.setValue("Name");
         
@@ -113,6 +116,9 @@ public class OverviewController {
             }
         });
         
+		/*
+		 * Criteria search functionality
+		 */
         searchForCriteria.getItems().addAll("Name", "Category", "Weight");
         searchForCriteria.setValue("Name");
         

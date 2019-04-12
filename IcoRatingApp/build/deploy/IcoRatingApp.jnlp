@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="IcoRatingApp.jnlp">
+  <information>
+    <title>IcoRatingApp</title>
+    <vendor>Benjamin Wyss</vendor>
+    <description>IcoRatingApp</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="IcoRatingApp.jar" size="35017" download="eager" />
+  </resources>
+  <jfx:javafx-desc  width="0" height="0" main-class="icoRating.MainApp"  name="IcoRatingApp" />
+  <update check="background"/>
+</jnlp>
