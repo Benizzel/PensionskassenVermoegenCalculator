@@ -24,9 +24,9 @@ public class TestPkVermoegenCalc {
 		einkommen = scannerVariable.nextInt();
 		
 		PkVermoegenCalc c = new PkVermoegenCalc();
-		pkVermoegen = c.calculateTheoretischesPensionskassenVermögen(istWeiblich, einkommen);		
+		pkVermoegen = c.calculateTheoretischesPensionskassenVermoegen(istWeiblich, einkommen);
 		
-		System.out.println("Das folgende PK Vermögen wurde berechnet: ");
+		System.out.println("Das folgende PK Vermoegen wurde berechnet: ");
 		System.out.println(pkVermoegen);
 		System.out.println("Die Berechnung basiert auf folgenden Angaben:");
 		System.out.println("Ist weiblich = " + istWeiblich);

@@ -42,12 +42,12 @@ public class PkVermoegenCalc {
 	}
 
 	/** 
-	*@return:Summe der jährlichen Pensionkasseneinzahlungen (=Pensionskassenvermögen) basierend auf dem koordinierten Lohn
-	*Annahme: Keine detailierten PK Daten eingegeben. Es wird angenommen, dass das Einkommen über alle Jahre das gleiche ist und nur der obligatorische Teil einbezahlt wird
-	*Unter 25 gibt es keine PK Einzahlung, Anschliessend ändert sich der Beitrag alle 10 Jahre
+	*@return:Summe der jï¿½hrlichen Pensionkasseneinzahlungen (=Pensionskassenvermï¿½gen) basierend auf dem koordinierten Lohn
+	*Annahme: Keine detailierten PK Daten eingegeben. Es wird angenommen, dass das Einkommen ï¿½ber alle Jahre das gleiche ist und nur der obligatorische Teil einbezahlt wird
+	*Unter 25 gibt es keine PK Einzahlung, Anschliessend ï¿½ndert sich der Beitrag alle 10 Jahre
 	*/
 
-	public int calculateTheoretischesPensionskassenVermögen(boolean istWeiblich, int einkommen) {
+	public int calculateTheoretischesPensionskassenVermoegen(boolean istWeiblich, int einkommen) {
 		
 			ArrayList<Integer> einzahlungen = new ArrayList<Integer>();
 		
@@ -57,7 +57,7 @@ public class PkVermoegenCalc {
 		int pensionierungsalter = getPensionierungsalter(istWeiblich);
 		int k = getKoordinierterLohn();
 		
-		//a = theoretisches Alter für Berechnung
+		//a = theoretisches Alter fï¿½r Berechnung
 		for (int a = 25; a <= pensionierungsalter; a++) {
 			int einzahlung = 0;
 			if (a < 35) {
