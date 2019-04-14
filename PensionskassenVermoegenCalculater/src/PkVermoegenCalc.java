@@ -1,4 +1,6 @@
+import java.awt.List;
 import java.math.*;
+import java.util.ArrayList;
 
 public class PkVermoegenCalc {	
 
@@ -47,6 +49,8 @@ public class PkVermoegenCalc {
 
 	public int calculateTheoretischesPensionskassenVermögen(boolean istWeiblich, int einkommen) {
 		
+			ArrayList<Integer> einzahlungen = new ArrayList<Integer>();
+		
 		this.istWeiblich = istWeiblich;
 		this.einkommen = einkommen;
 		int summeEinzahlungenProJahr = 0;
@@ -58,19 +62,23 @@ public class PkVermoegenCalc {
 			int einzahlung = 0;
 			if (a < 35) {
 				einzahlung = (int) (k * 0.07);
+				einzahlungen.add(einzahlung);
 				summeEinzahlungenProJahr += einzahlung;
 			} else if (a >= 35 && a < 45) {
 				einzahlung = (int) (k * 0.1);
+				einzahlungen.add(einzahlung);
 				summeEinzahlungenProJahr += einzahlung;
 			} else if (a >= 45 && a < 55) {
 				einzahlung = (int) (k * 0.15);
+				einzahlungen.add(einzahlung);
 				summeEinzahlungenProJahr += einzahlung;
 			} else {
 				einzahlung = (int) (k * 0.18);
+				einzahlungen.add(einzahlung);
 				summeEinzahlungenProJahr += einzahlung;
 			}
 		};
-		
+		System.out.println(einzahlungen);
 		return summeEinzahlungenProJahr;
 	}
 
