@@ -8,12 +8,10 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import icoRating.model.Criteria;
-import icoRating.model.Ico;
-import icoRating.model.PortfolioWrapper;
-import icoRating.view.IcoDialogController;
 import icoRating.view.OverviewController;
 import icoRating.view.RootLayoutController;
+import icoRating.model.Criteria;
+import icoRating.model.Ico;
 import icoRating.view.CriteriaDialogController;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
