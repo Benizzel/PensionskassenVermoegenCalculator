@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6e07a143-6748-47c4-bc88-7801b72888ed" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/../IcoRatingApp/.idea/misc.xml" afterPath="$PROJECT_DIR$/../IcoRatingApp/.idea/misc.xml" />
       <change beforePath="$PROJECT_DIR$/../IcoRatingApp/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../IcoRatingApp/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/../IcoRatingApp/IcoRatingApp.iml" afterPath="$PROJECT_DIR$/../IcoRatingApp/IcoRatingApp.iml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/PkVermoegenCalc.java" afterPath="$PROJECT_DIR$/src/PkVermoegenCalc.java" />
-      <change beforePath="$PROJECT_DIR$/src/TestPkVermoegenCalc.java" afterPath="$PROJECT_DIR$/src/TestPkVermoegenCalc.java" />
-      <change beforePath="$PROJECT_DIR$/../Spielwiese" afterPath="" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
