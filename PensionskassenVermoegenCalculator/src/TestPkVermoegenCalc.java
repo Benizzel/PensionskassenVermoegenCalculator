@@ -7,6 +7,7 @@ public class TestPkVermoegenCalc {
 		boolean istWeiblich = false;
 		int einkommen = 0;
 		int pkVermoegen = 0;
+		int zins = 0;
 		
 		Scanner scannerVariable = new Scanner(System.in);
 		
@@ -22,15 +23,19 @@ public class TestPkVermoegenCalc {
 		System.out.println("Einkommen (als ganze Zahl): ");
 
 		einkommen = scannerVariable.nextInt();
+
+		System.out.println("Zins in Prozent: ");
+		zins = scannerVariable.nextInt();
 		
 		PkVermoegenCalc c = new PkVermoegenCalc();
-		pkVermoegen = c.calculateTheoretischesPensionskassenVermoegen(istWeiblich, einkommen);
+		pkVermoegen = c.calculateTheoretischesPensionskassenVermoegen(istWeiblich, einkommen, zins);
 		
 		System.out.println("Das folgende PK Vermoegen wurde berechnet: ");
 		System.out.println(pkVermoegen);
 		System.out.println("Die Berechnung basiert auf folgenden Angaben:");
 		System.out.println("Ist weiblich = " + istWeiblich);
 		System.out.println("Einkommen = " + einkommen);
+		System.out.println("Zins = " + zins);
 	}
 
 }
